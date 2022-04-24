@@ -2,6 +2,7 @@ import json
 import vk
 from config import access_token
 import random
+import aiofiles
 
 session = vk.Session(access_token=access_token)
 vkapi = vk.API(session, v='5.131')
@@ -54,7 +55,11 @@ async def get_photos_ids(url, id):
         description[name] = photo['text'].split()
         names_of_photos.append(name)
 
-    id2desc = {id: description}
+    async with aiofiles.open("desc.json", "r") as jsonFile:
+        content = await jsonFile.read()
+    id2desc = json.loads(content)
+
+    id2desc[id] = description
     with open("desc.json", "w+") as jsonFile:
         json.dump(id2desc, jsonFile, indent=2)
 

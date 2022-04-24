@@ -2,7 +2,6 @@ from vkbottle.bot import Bot, Message
 from vkbottle import Keyboard, Text
 from config import token, default_album
 from typing import Optional
-import aiofiles
 from my_tools import *
 from urllib.parse import urlparse
 import os.path
@@ -16,6 +15,7 @@ async def other_album_handler(m: Message):
          content = await f.read()
     ids2names = json.loads(content)
     try:
+        print(m.text)
         names_of_photos = await get_photos_ids(m.text, str(m.from_id))
         ids2names[str(m.from_id)] = names_of_photos
         with open("ids2names.json", "w+") as jsonFile:
@@ -26,7 +26,7 @@ async def other_album_handler(m: Message):
         await m.answer('Ссылочка похоже не та')
 
 
-@bot.on.message(text='Старт')
+@bot.on.message(text=['Старт', 'старт'])
 async def photos_handler(m: Message):
     async with aiofiles.open("ids2names.json", "r") as jsonFile:
         content = await jsonFile.read()
@@ -39,7 +39,7 @@ async def photos_handler(m: Message):
     if str(m.from_id) in ids2names.keys():
         names_of_photos = ids2names[str(m.from_id)]
     else:
-        names_of_photos = await get_photos_ids(default_album)
+        names_of_photos = await get_photos_ids(default_album, str(m.from_id))
         ids2names[str(m.from_id)] = names_of_photos
 
     if len(names_of_photos) < 5:
