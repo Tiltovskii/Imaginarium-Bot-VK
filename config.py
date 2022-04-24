@@ -1,3 +1,3 @@
-token = '60746334fb2950b4bca9980f2d6c035f8257b508df4d0ed936bc24eaacc4d6aab7cad0dd5342b6af02f9d'
-access_token = '25a06d03d426dbe806d7ee7be0f49594645870390e825b63c297a258c78ade7cd949db0675c29d839d5aa'
+token = ''
+access_token = ''
 default_album = 'https://vk.com/album-212865290_283913040'
