@@ -16,7 +16,6 @@ async def other_album_handler(m: Message):
          content = await f.read()
     ids2names = json.loads(content)
     try:
-        print(m.text)
         names_of_photos = await get_photos_ids(m.text, str(m.from_id))
         ids2names[str(m.from_id)] = names_of_photos
         with open("ids2names.json", "w+") as jsonFile:
